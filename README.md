@@ -75,3 +75,47 @@ getattr(
   __import__("os"), "write"
 )(1, b"hello world")
 ```
+You know that `print` by default ends with `\n` (newline)?, well `os.write` doesn't. And that's good because we can just output multiple characters on the same line.
+We could use a for loop, there are many other ways to do that, but we will use a for loop this time.
+
+```py
+for char in character_list:
+  os.write(1, chr(char).encode())
+```
+Instead of `chr` we could go lower level and use `bytes` object to turn a number into ASCII character. And we can do it by writing
+```py
+for char in character_list:
+  os.write(1, bytes([char])
+```
+It must be inside square brackets like this `bytes([char])`.
+
+And now let's obfuscate it much more, there are a few rules, no strings, no numbers. Booleans are allowed.
+We have our list, we have our module we are going to use, we know basic bit shifting and bitwise operators, we have our output part of code, now just replace all the numbers and strings with something else.
+
+for example, when you import `os` here:
+```py
+getattr(
+  __import__("os"), "write"
+)(1, b"hello world")
+```
+we can use class names of Python objects, you can get the letter "o" from word "bool" that you get by doing `True.__class__.__name__`, it doesn't have to be `True`, it can be `False` too, it doesn't matter as long as it is boolean. And the letter "s" you can get from "list", you get it by doing `[].__class__.__name__`, simple, right? Now you've got "o" and "s" and just combine them to import `os`. The word "write" you can get from `__builtins__` and similar ways, I got "wr" from the word "wrapper" and "ite" from the word "iter". You can tinker yourself and find your own ways to get those words and letters-
+And of course, obfuscate it as much as you want. Just tinker and make everything confusing.
+This is what I ended up with:
+```py
+for ____ in ___:
+    (lambda _, __: (lambda ___:
+                    getattr(
+                        __import__([_.__class__.__name__[_]+[].__class__.__name__[_<<_]][_>>_]), 
+                        str(((_|_).__class__.__eq__.__class__.__name__[:(__builtins__.len((_^__).__class__.__name__)//(-~~-_-~~-_))]))+
+                        bytes([(((_ << _ << _) ** _ << _ <<_<<_<<_<<_) - (_<< _<<_<<_<<_) + (_<<_))]).decode()+
+                        (str({}.__iter__)[(((_ << _) << (_ << _) << (_ << _))  - (_ << _ << _ << _ << _) + ((_ << _)+_)):
+                                        (((_ << _) << (_ << _) << (_ << _)) -(_ << _ << _ << _ << _) + ((_ << _ << _)+(_<<_)))])
+    )(___,bytes([____])))(__builtins__.len(type([]).__repr__([(_^__&_%_%_%_//__-+~__**~__)])[__//__&_<<_])))(_:=bool(-~([]<[])),~_)
+```
+Just remember all the basics I have talked about here, and keep obfuscating, also that big and confusing chunk of code is just importing `os` and writing "hello world".
+
+
+Thank you for reading, and have fun with making weird programs!
+Have a great time!
+
+Oh also, feel free to do whatever you want with this code, it's public domain!
